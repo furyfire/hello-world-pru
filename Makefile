@@ -13,8 +13,10 @@
 # 
 
 # PRU_CGT environment variable must point to the TI PRU compiler directory.
-# PRU_SUPPROT points to pru-software-support-package
+# PRU_SUPPORT points to pru-software-support-package
 # Both are set in setup.sh
+PRU_CGT:=/usr/share/ti/cgt-pru
+PRU_SUPPORT:=/opt/source/pru-software-support-package
 
 LINKER_COMMAND_FILE=./AM335x_PRU.cmd
 LIBS=--library=$(PRU_SUPPORT)/lib/rpmsg_lib.lib
@@ -52,32 +54,32 @@ all: $(TARGETS)
 
 $(PRU0_FW): $(GEN_DIR)/main_pru0.object $(LINK_PRU0_FW)
 	@echo 'LD	$^' 
-	@$(PRU_CGT)/bin/lnkpru -i$(PRU_CGT)/lib -i$(PRU_CGT)/include $(LFLAGS) -o $@ $^  $(LINKER_COMMAND_FILE) --library=libc.a $(LIBS) $^
+	@lnkpru -i$(PRU_CGT)/lib -i$(PRU_CGT)/include $(LFLAGS) -o $@ $^  $(LINKER_COMMAND_FILE) --library=libc.a $(LIBS) $^
 
 $(PRU1_FW): $(GEN_DIR)/main_pru1.object $(LINK_PRU1_FW)
 	@echo 'LD	$^'
-	@$(PRU_CGT)/bin/lnkpru -i$(PRU_CGT)/lib -i$(PRU_CGT)/include $(LFLAGS) -o $@ $^  $(LINKER_COMMAND_FILE) --library=libc.a $(LIBS) $^
+	@lnkpru -i$(PRU_CGT)/lib -i$(PRU_CGT)/include $(LFLAGS) -o $@ $^  $(LINKER_COMMAND_FILE) --library=libc.a $(LIBS) $^
 
 $(GEN_DIR)/main_pru0.object: main_pru0.c 
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
-	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 $(GEN_DIR)/main_pru1.object: main_pru1.c
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
-	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 
 $(GEN_DIR)/pru0-ledButton.object: pru0-ledButton.asm
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
-	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 $(GEN_DIR)/pru1-test.object: pru1-test.asm
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
-	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 .PHONY: install install-pru1 install-pru0 copy_pru0_fw copy_pru1_fw reboot_pru_1 reboot_pru_0
 
