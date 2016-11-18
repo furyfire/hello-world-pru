@@ -2,3 +2,11 @@
 1. Grab http://debian.beagleboard.org/images/bone-debian-8.6-lxqt-4gb-armhf-2016-11-06-4gb.img.xz
 2. Program a microSD card with that image using http://etcher.io
 3. Boot it on a BeagleBone
+
+# Notes
+
+* perl /opt/scripts/device/bone/show-pins.pl
+* config-pin --help
+* Bug tracker: http://bugs.elinux.org/projects/debian-image-releases
+* http://elinux.org/EBC_Exercise_30_PRU_via_remoteproc_and_RPMsg
+* https://docs.google.com/presentation/d/1yMuyQwkYKU48LeMYnQj4sspnsbXf9niojWe_jr4BWjw/edit?usp=sharing
