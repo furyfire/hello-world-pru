@@ -12,7 +12,7 @@
 	.global start
 start:
 	; lsr		r14, r14, 1		; Divide number of delay cycles by 2 since each loop takes 2 cycles
-	set		r30, r30.t5     ; turn on the output pin (LED on)
+	set		r30, r30.t5     ; turn on the output pin (LED on - P9_27)
 	mov		r0, r14         ; store the length of the delay in REG0
 
 delayon:
@@ -27,7 +27,7 @@ delayoff:
 	sub		r0, r0, 1        ; decrement REG0 by 1
 	qbne	delayoff, r0, 0  ; Loop to DELAYOFF, unless REG0=0
 
-	qbbc	start, r31, 2    ; is the button pressed? If not, loop
+	qbbs	start, r31, 2    ; is the button (P9_30) pressed? If not, loop
 
 end:
 	jmp		r3				; r3 contains the return address
