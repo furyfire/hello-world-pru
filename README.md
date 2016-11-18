@@ -10,3 +10,4 @@
 * Bug tracker: http://bugs.elinux.org/projects/debian-image-releases
 * http://elinux.org/EBC_Exercise_30_PRU_via_remoteproc_and_RPMsg
 * https://docs.google.com/presentation/d/1yMuyQwkYKU48LeMYnQj4sspnsbXf9niojWe_jr4BWjw/edit?usp=sharing
+* http://processors.wiki.ti.com/index.php/PRU_Assembly_Instructions
