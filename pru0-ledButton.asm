@@ -27,7 +27,7 @@ delayoff:
 	sub		r0, r0, 1        ; decrement REG0 by 1
 	qbne	delayoff, r0, 0  ; Loop to DELAYOFF, unless REG0=0
 
-	qbbc	start, r31, 3    ; is the button pressed? If not, loop
+	qbbc	start, r31, 2    ; is the button pressed? If not, loop
 
 end:
 	jmp		r3				; r3 contains the return address
