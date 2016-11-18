@@ -7,3 +7,4 @@
 
 * perl /opt/scripts/device/bone/show-pins.pl
 * config-pin --help
+* Bug tracker: http://bugs.elinux.org/projects/debian-image-releases
