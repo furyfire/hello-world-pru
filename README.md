@@ -2,7 +2,8 @@
 1. Grab https://rcn-ee.com/rootfs/bb.org/testing/2017-06-11/stretch-iot/bone-debian-stretch-iot-armhf-2017-06-11-4gb.img.xz
 2. Program a microSD card with that image using http://etcher.io
 3. Boot it on a BeagleBone
-4. Run the following in the shell
+4. Get connected to the Internet
+5. Run the following in the shell
 ```sh
 cd /var/lib/cloud9
 git clone https://gist.github.com/jadonk/2ecf864e1b3f250bad82c0eae12b7b64
