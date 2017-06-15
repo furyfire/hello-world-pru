@@ -1,13 +1,41 @@
 # Instructions
-1. Grab http://debian.beagleboard.org/images/bone-debian-8.6-lxqt-4gb-armhf-2016-11-06-4gb.img.xz
+1. Grab https://rcn-ee.com/rootfs/bb.org/testing/2017-06-11/stretch-iot/bone-debian-stretch-iot-armhf-2017-06-11-4gb.img.xz
 2. Program a microSD card with that image using http://etcher.io
 3. Boot it on a BeagleBone
+4. Run the following in the shell
+```sh
+cd /var/lib/cloud9
+git clone https://gist.github.com/jadonk/2ecf864e1b3f250bad82c0eae12b7b64
+cd 2ecf864e1b3f250bad82c0eae12b7b64
+make
+echo none > /sys/class/leds/beaglebone\:green\:usr0/trigger
+sudo make run
+```
+
+You'll see USR0 blinking 5 times a second (toggles every 100ms). Modify hello-pru.c as desired
+and enjoy!
 
 # Notes
 
-* perl /opt/scripts/device/bone/show-pins.pl
+* sudo perl /opt/scripts/device/bone/show-pins.pl -v
 * config-pin --help
 * Bug tracker: http://bugs.elinux.org/projects/debian-image-releases
 * http://elinux.org/EBC_Exercise_30_PRU_via_remoteproc_and_RPMsg
 * https://docs.google.com/presentation/d/1yMuyQwkYKU48LeMYnQj4sspnsbXf9niojWe_jr4BWjw/edit?usp=sharing
+* http://processors.wiki.ti.com/images/3/34/Sitara_boot_camp_pru-module1-hw-overview.pdf
 * http://processors.wiki.ti.com/index.php/PRU_Assembly_Instructions
+* http://theduchy.ualr.edu/?p=996
+
+# Version
+
+Debian Stretch BeagleBoard.org BeagleBone IoT Image
+
+git:/opt/scripts/:[09ae22ec483e5483c6ae7f0ca7bbbabf864b06af]
+eeprom:[A335BNLTBP00yywwBP000000]
+dogtag:[BeagleBoard.org Debian Image 2017-06-11]
+bootloader:[microSD-(push-button)]:[/dev/mmcblk0]:[U-Boot 2017.05-00002-ga302d6e48b]
+kernel:[4.4.68-ti-r108]
+nodejs:[v6.11.0]
+uboot_overlay_options:[enable_uboot_overlays=1]
+uboot_overlay_options:[uboot_overlay_pru=/lib/firmware/AM335X-PRU-RPROC-4-4-TI-00A0.dtbo]
+uboot_overlay_options:[enable_uboot_cape_universal=1]
