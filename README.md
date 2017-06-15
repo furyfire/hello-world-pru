@@ -27,6 +27,7 @@ and enjoy!
 * http://processors.wiki.ti.com/images/3/34/Sitara_boot_camp_pru-module1-hw-overview.pdf
 * http://processors.wiki.ti.com/index.php/PRU_Assembly_Instructions
 * http://theduchy.ualr.edu/?p=996
+* http://processors.wiki.ti.com/index.php/PRU_Projects
 
 # Version
 
