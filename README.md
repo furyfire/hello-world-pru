@@ -33,6 +33,7 @@ and enjoy!
 
 Debian Stretch BeagleBoard.org BeagleBone IoT Image
 
+```sh
 git:/opt/scripts/:[09ae22ec483e5483c6ae7f0ca7bbbabf864b06af]
 eeprom:[A335BNLTBP00yywwBP000000]
 dogtag:[BeagleBoard.org Debian Image 2017-06-11]
@@ -42,3 +43,4 @@ nodejs:[v6.11.0]
 uboot_overlay_options:[enable_uboot_overlays=1]
 uboot_overlay_options:[uboot_overlay_pru=/lib/firmware/AM335X-PRU-RPROC-4-4-TI-00A0.dtbo]
 uboot_overlay_options:[enable_uboot_cape_universal=1]
+```
