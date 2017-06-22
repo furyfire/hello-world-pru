@@ -53,6 +53,10 @@
 unsigned int volatile * const GPIO1_CLEAR = (unsigned int *) (GPIO1 + GPIO_CLEARDATAOUT);
 unsigned int volatile * const GPIO1_SET = (unsigned int *) (GPIO1 + GPIO_SETDATAOUT);
 
+volatile register unsigned int __R30;
+volatile register unsigned int __R31;
+#define PRU0_GPIO (1<<2)
+
 #ifndef DECAY_RATE
 #define DECAY_RATE 100
 #endif
@@ -72,9 +76,15 @@ void main(void) {
 #ifndef LED_DISABLE
 		*GPIO1_SET = USR0;
 #endif
+#ifndef GPIO_DISABLE
+		__R30 |= PRU0_GPIO;
+#endif
 		for(j=0;j<i;j++){ __delay_cycles(DELAY_CYCLES); }
 #ifndef LED_DISABLE
 		*GPIO1_CLEAR = USR0;
+#endif
+#ifndef GPIO_DISABLE
+		__R30 ^= PRU0_GPIO;
 #endif
 		for(j=0;j<i;j++){ __delay_cycles(DELAY_CYCLES); }
 	}

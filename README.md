@@ -9,6 +9,8 @@ git clone https://gist.github.com/jadonk/2ecf864e1b3f250bad82c0eae12b7b64
 cd 2ecf864e1b3f250bad82c0eae12b7b64
 make
 echo none > /sys/class/leds/beaglebone\:green\:usr0/trigger
+sudo config-pin overlay cape-universala
+sudo config-pin p9.30 pruout
 sudo make run
 ```
 
