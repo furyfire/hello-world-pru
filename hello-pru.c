@@ -41,8 +41,7 @@
 
 #define	INS_PER_US 200           // 5ns per instruction
 #define INS_PER_DELAY_LOOP 2	 // two instructions per delay loop
-// set up a 100ms delay
-#define TIME 100 * 1000 * (INS_PER_US / INS_PER_DELAY_LOOP)
+#define DELAY_CYCLES_US (INS_PER_US / INS_PER_DELAY_LOOP)
 
 #define GPIO1 0x4804C000
 #define GPIO_CLEARDATAOUT 0x190
@@ -54,14 +53,31 @@
 unsigned int volatile * const GPIO1_CLEAR = (unsigned int *) (GPIO1 + GPIO_CLEARDATAOUT);
 unsigned int volatile * const GPIO1_SET = (unsigned int *) (GPIO1 + GPIO_SETDATAOUT);
 
+#ifndef DECAY_RATE
+#define DECAY_RATE 100
+#endif
+#ifndef DELAY_CYCLES
+#define DELAY_CYCLES DELAY_CYCLES_US
+#endif
+
+const int decay = DECAY_RATE;
+
 void main(void) {
+	int i, j;
+
 	/* Clear SYSCFG[STANDBY_INIT] to enable OCP master port */
 	CT_CFG.SYSCFG_bit.STANDBY_INIT = 0;
 
-	while(1) {
+	for(i = 1000000; i > 0; i = (i * decay) / 100) {
+#ifndef LED_DISABLE
 		*GPIO1_SET = USR0;
-		__delay_cycles(TIME);
+#endif
+		for(j=0;j<i;j++){ __delay_cycles(DELAY_CYCLES); }
+#ifndef LED_DISABLE
 		*GPIO1_CLEAR = USR0;
-		__delay_cycles(TIME);
+#endif
+		for(j=0;j<i;j++){ __delay_cycles(DELAY_CYCLES); }
 	}
+
+	__halt();
 }
