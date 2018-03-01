@@ -59,6 +59,12 @@ void main(void) {
 		__R30 ^= PRU0_GPIO;
 		__R30 |= PRU0_GPIO;
 		__R30 ^= PRU0_GPIO;
+		__R30 |= PRU0_GPIO;
+		__R30 ^= PRU0_GPIO;
+		__R30 |= PRU0_GPIO;
+		__R30 ^= PRU0_GPIO;
+		__R30 |= PRU0_GPIO;
+		__R30 ^= PRU0_GPIO;
 	}
 	__halt(); //We should never get here
 }

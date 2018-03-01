@@ -6,8 +6,8 @@
 5. Run the following in the shell
 ```sh
 cd
-git clone https://gist.github.com/furyfire/0cb1eaa7507c17cabac1affcfd648204 beaglebone-pru-ledflasher
-cd beaglebone-pru-ledflasher
+git clone https://github.com/furyfire/hello-world-pru 
+cd hello-world-pru
 make
 echo none > /sys/class/leds/beaglebone\:green\:usr0/trigger
 sudo config-pin overlay cape-universala
@@ -15,8 +15,12 @@ sudo config-pin p9.30 pruout
 sudo make run
 ```
 
-You'll see USR0 blinking 1 time a second (on 10ms of 990ms). Modify hello-pru.c as desired
-and enjoy!
+You will see USR0 blinking 1 time a second (on 10ms/off 990ms). 
+Modify hello-world-pru1.c as desired.
+
+You will see P9.30 toggling as fast as possible (Frequency very close to 100MHz)
+The last missing frequency is due to the extra instructions for each while loop
+Modify hello-world-pru0.c as desired
 
 # Notes
 
