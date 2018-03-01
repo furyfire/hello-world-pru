@@ -2,7 +2,7 @@
 # Copyright (c) 2016 Zubeen Tolani <ZeekHuge - zeekhuge@gmail.com>
 # Copyright (c) 2017 Texas Instruments - Jason Kridner <jdk@ti.com>
 #
-PROJ_NAME=hello-pru
+PROJ_NAME=hello-world-pru
 
 # PRU_CGT environment variable must point to the TI PRU compiler directory.
 # PRU_SUPPORT points to pru-software-support-package
@@ -21,13 +21,14 @@ LFLAGS=--reread_libs --warn_sections --stack_size=$(STACK_SIZE) --heap_size=$(HE
 
 GEN_DIR=gen
 
-PRU0_FW		=$(GEN_DIR)/$(PROJ_NAME).out
+PRU0_FW		=$(GEN_DIR)/$(PROJ_NAME)0.out
+PRU1_FW		=$(GEN_DIR)/$(PROJ_NAME)1.out
 
 # -----------------------------------------------------
 # Variable to edit in the makefile
 
 # add the required firmwares to TARGETS
-TARGETS		=$(PRU0_FW)
+TARGETS		=$(PRU0_FW) $(PRU1_FW)
 
 #------------------------------------------------------
 
@@ -49,12 +50,18 @@ $(GEN_DIR)/$(PROJ_NAME).obj: $(PROJ_NAME).c
 install: all
 	@echo '-	copying firmware file $(PRU0_FW) to /lib/firmware/am335x-pru0-fw'
 	@cp $(PRU0_FW) /lib/firmware/am335x-pru0-fw
+	@echo '-	copying firmware file $(PRU1_FW) to /lib/firmware/am335x-pru0-fw'
+	@cp $(PRU1_FW) /lib/firmware/am335x-pru1-fw
 
 run: install
 	@echo '-	rebooting pru core 0'
 	$(shell echo "stop" > /sys/class/remoteproc/remoteproc1/state 2> /dev/null)
 	$(shell echo "start" > /sys/class/remoteproc/remoteproc1/state 2> /dev/null)
 	@echo "-	pru core 0 is now loaded with $(PRU0_FW)"
+	@echo '-	rebooting pru core 1'
+	$(shell echo "stop" > /sys/class/remoteproc/remoteproc2/state 2> /dev/null)
+	$(shell echo "start" > /sys/class/remoteproc/remoteproc2/state 2> /dev/null)
+	@echo "-	pru core 1 is now loaded with $(PRU1_FW)"
 
 .PHONY: clean
 clean:
