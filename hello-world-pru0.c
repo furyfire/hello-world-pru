@@ -40,23 +40,9 @@
 #include <pru_ctrl.h>
 #include "resource_table_empty.h"
 
-#define	INS_PER_US 200           // 5ns per instruction
-#define DELAY_OFF  (INS_PER_US *  990000)
-#define DELAY_ON (INS_PER_US * 10000)
+volatile register unsigned int __R30;
 
-//AM335x Datasheet
-#define GPIO1 0x4804C000
-#define GPIO_CLEARDATAOUT 0x190
-#define GPIO_SETDATAOUT 0x194
-#define USR0 (1<<21)
-#define USR1 (1<<22)
-#define USR2 (1<<23)
-#define USR3 (1<<24)
-
-//Register address for get and set on GPIO port 1
-unsigned int volatile * const GPIO1_CLEAR = (unsigned int *) (GPIO1 + GPIO_CLEARDATAOUT);
-unsigned int volatile * const GPIO1_SET = (unsigned int *) (GPIO1 + GPIO_SETDATAOUT);
-
+#define PRU0_GPIO (1<<2)
 
 void main(void) {
 	/* Clear SYSCFG[STANDBY_INIT] to enable OCP master port */
@@ -64,10 +50,15 @@ void main(void) {
 
 	//Lets run forever
 	while(1) {
-		*GPIO1_SET = USR0; //Turn on
-		 __delay_cycles(DELAY_ON);
-		*GPIO1_CLEAR = USR0; //Turn off
-		__delay_cycles(DELAY_OFF);
+//Do this a few times so we can see the processor speed without the while loop
+		__R30 |= PRU0_GPIO; 
+		__R30 ^= PRU0_GPIO;
+		__R30 |= PRU0_GPIO;
+		__R30 ^= PRU0_GPIO;
+		__R30 |= PRU0_GPIO;
+		__R30 ^= PRU0_GPIO;
+		__R30 |= PRU0_GPIO;
+		__R30 ^= PRU0_GPIO;
 	}
 	__halt(); //We should never get here
 }
