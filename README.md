@@ -1,13 +1,13 @@
 # Instructions
-1. Grab https://rcn-ee.com/rootfs/bb.org/testing/2017-06-11/stretch-iot/bone-debian-stretch-iot-armhf-2017-06-11-4gb.img.xz
+1. Grab http://debian.beagleboard.org/images/bone-debian-9.3-iot-armhf-2018-01-28-4gb.img.xz
 2. Program a microSD card with that image using http://etcher.io
 3. Boot it on a BeagleBone
 4. Get connected to the Internet
 5. Run the following in the shell
 ```sh
-cd /var/lib/cloud9
-git clone https://gist.github.com/jadonk/2ecf864e1b3f250bad82c0eae12b7b64
-cd 2ecf864e1b3f250bad82c0eae12b7b64
+cd
+git clone https://gist.github.com/furyfire/0cb1eaa7507c17cabac1affcfd648204 beaglebone-pru-ledflasher
+cd beaglebone-pru-ledflasher
 make
 echo none > /sys/class/leds/beaglebone\:green\:usr0/trigger
 sudo config-pin overlay cape-universala
@@ -34,15 +34,23 @@ and enjoy!
 # Version
 
 Debian Stretch BeagleBoard.org BeagleBone IoT Image
-
 ```sh
-git:/opt/scripts/:[09ae22ec483e5483c6ae7f0ca7bbbabf864b06af]
-eeprom:[A335BNLTBP00yywwBP000000]
-dogtag:[BeagleBoard.org Debian Image 2017-06-11]
-bootloader:[microSD-(push-button)]:[/dev/mmcblk0]:[U-Boot 2017.05-00002-ga302d6e48b]
-kernel:[4.4.68-ti-r108]
-nodejs:[v6.11.0]
+sudo /opt/scripts/tools/version.sh
+git:/opt/scripts/:[ea6ea9fca05f36f5044398884375b0231348d6e2]
+eeprom:[A335BNLT00C03317BBBK1646]
+model:[TI_AM335x_BeagleBone_Black]
+dogtag:[BeagleBoard.org Debian Image 2018-01-28]
+bootloader:[microSD-(push-button)]:[/dev/mmcblk0]:[U-Boot 2018.01-00002-g9aa111a004]
+bootloader:[eMMC-(default)]:[/dev/mmcblk1]:[U-Boot 2017.09-00002-g0f3f1c7907]
+kernel:[4.9.78-ti-r94]
+nodejs:[v6.13.0]
 uboot_overlay_options:[enable_uboot_overlays=1]
-uboot_overlay_options:[uboot_overlay_pru=/lib/firmware/AM335X-PRU-RPROC-4-4-TI-00A0.dtbo]
 uboot_overlay_options:[enable_uboot_cape_universal=1]
+pkg:[bb-cape-overlays]:[4.4.20180126.0-0rcnee0~stretch+20180126]
+pkg:[bb-wl18xx-firmware]:[1.20170829-0rcnee2~stretch+20180104]
+pkg:[firmware-ti-connectivity]:[20170823-1rcnee0~stretch+20170830]
+groups:[debian : debian adm kmem dialout cdrom floppy audio dip video plugdev users systemd-journal i2c bluetooth netdev cloud9ide gpio pwm eqep admin spi tisdk weston-launch xenomai]
+dmesg | grep pinctrl-single
+[    1.416818] pinctrl-single 44e10800.pinmux: 142 pins at pa f9e10800 size 568
+END
 ```

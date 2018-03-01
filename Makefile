@@ -61,16 +61,16 @@ install:
 
 run: install
 	@echo '-	rebooting pru core 0'
-	$(shell echo "4a334000.pru0" > /sys/bus/platform/drivers/pru-rproc/unbind 2> /dev/null)
-	$(shell echo "4a334000.pru0" > /sys/bus/platform/drivers/pru-rproc/bind)
+	$(shell echo "stop" > /sys/class/remoteproc/remoteproc1/state 2> /dev/null)
+	$(shell echo "start" > /sys/class/remoteproc/remoteproc1/state 2> /dev/null)
 	@echo "-	pru core 0 is now loaded with $(PRU0_FW)"
 
 run95:
 	@echo '-	copying firmware file $(GEN_DIR)/decay95.out to /lib/firmware/am335x-pru0-fw'
 	@cp $(GEN_DIR)/decay95.out /lib/firmware/am335x-pru0-fw
 	@echo '-	rebooting pru core 0'
-	$(shell echo "4a334000.pru0" > /sys/bus/platform/drivers/pru-rproc/unbind 2> /dev/null)
-	$(shell echo "4a334000.pru0" > /sys/bus/platform/drivers/pru-rproc/bind)
+	$(shell echo "stop" > /sys/class/remoteproc/remoteproc1/state 2> /dev/null)
+	$(shell echo "start" > /sys/class/remoteproc/remoteproc1/state 2> /dev/null)
 	@echo "-	pru core 0 is now loaded with $(GEN_DIR)/decay95.out"
 
 .PHONY: clean
