@@ -27,7 +27,7 @@ PRU0_FW		=$(GEN_DIR)/$(PROJ_NAME).out
 # Variable to edit in the makefile
 
 # add the required firmwares to TARGETS
-TARGETS		=$(PRU0_FW) $(GEN_DIR)/decay95.out
+TARGETS		=$(PRU0_FW)
 
 #------------------------------------------------------
 

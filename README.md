@@ -15,7 +15,7 @@ sudo config-pin p9.30 pruout
 sudo make run
 ```
 
-You'll see USR0 blinking 5 times a second (toggles every 100ms). Modify hello-pru.c as desired
+You'll see USR0 blinking 1 time a second (on 10ms of 990ms). Modify hello-pru.c as desired
 and enjoy!
 
 # Notes
