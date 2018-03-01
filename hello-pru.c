@@ -1,5 +1,6 @@
 /*
  * Source Modified by Zubeen Tolani < ZeekHuge - zeekhuge@gmail.com >
+ * Source Modified by Jens True 
  * Based on the examples distributed by TI
  *
  * Copyright (C) 2015 Texas Instruments Incorporated - http://www.ti.com/
@@ -40,8 +41,8 @@
 #include "resource_table_empty.h"
 
 #define	INS_PER_US 200           // 5ns per instruction
-#define INS_PER_DELAY_LOOP 2	 // two instructions per delay loop
-#define DELAY_CYCLES_US (INS_PER_US / INS_PER_DELAY_LOOP)
+#define DELAY_1SEC (INS_PER_US *  990000)
+#define DELAY_10MSEC (INS_PER_US * 10000)
 
 #define GPIO1 0x4804C000
 #define GPIO_CLEARDATAOUT 0x190
@@ -57,14 +58,7 @@ volatile register unsigned int __R30;
 volatile register unsigned int __R31;
 #define PRU0_GPIO (1<<2)
 
-#ifndef DECAY_RATE
-#define DECAY_RATE 100
-#endif
-#ifndef DELAY_CYCLES
-#define DELAY_CYCLES DELAY_CYCLES_US
-#endif
 
-const int decay = DECAY_RATE;
 
 void main(void) {
 	int i, j;
@@ -72,21 +66,13 @@ void main(void) {
 	/* Clear SYSCFG[STANDBY_INIT] to enable OCP master port */
 	CT_CFG.SYSCFG_bit.STANDBY_INIT = 0;
 
-	for(i = 1000000; i > 0; i = (i * decay) / 100) {
-#ifndef LED_DISABLE
+	while(1) {
 		*GPIO1_SET = USR0;
-#endif
-#ifndef GPIO_DISABLE
 		__R30 |= PRU0_GPIO;
-#endif
-		for(j=0;j<i;j++){ __delay_cycles(DELAY_CYCLES); }
-#ifndef LED_DISABLE
+		 __delay_cycles(DELAY_10MSEC);
 		*GPIO1_CLEAR = USR0;
-#endif
-#ifndef GPIO_DISABLE
 		__R30 ^= PRU0_GPIO;
-#endif
-		for(j=0;j<i;j++){ __delay_cycles(DELAY_CYCLES); }
+		__delay_cycles(DELAY_1SEC);
 	}
 
 	__halt();
