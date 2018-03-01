@@ -36,11 +36,20 @@ TARGETS		=$(PRU0_FW) $(PRU1_FW)
 all: $(TARGETS)
 	@echo '-	Generated firmwares are : $^'
 
-$(PRU0_FW): $(GEN_DIR)/$(PROJ_NAME).obj
+$(PRU0_FW): $(GEN_DIR)/$(PROJ_NAME)0.obj
 	@echo 'LD	$^' 
 	@lnkpru -i$(PRU_CGT)/lib -i$(PRU_CGT)/include $(LFLAGS) -o $@ $^  $(LINKER_COMMAND_FILE) --library=libc.a $(LIBS) $^
 
-$(GEN_DIR)/$(PROJ_NAME).obj: $(PROJ_NAME).c 
+$(PRU1_FW): $(GEN_DIR)/$(PROJ_NAME)1.obj
+	@echo 'LD	$^' 
+	@lnkpru -i$(PRU_CGT)/lib -i$(PRU_CGT)/include $(LFLAGS) -o $@ $^  $(LINKER_COMMAND_FILE) --library=libc.a $(LIBS) $^
+
+$(GEN_DIR)/$(PROJ_NAME)0.obj: $(PROJ_NAME)0.c 
+	@mkdir -p $(GEN_DIR)
+	@echo 'CC	$<'
+	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+
+$(GEN_DIR)/$(PROJ_NAME)1.obj: $(PROJ_NAME)1.c 
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
 	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
